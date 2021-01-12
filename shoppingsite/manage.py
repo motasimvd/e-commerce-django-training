@@ -2,10 +2,15 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
+import environ
 
+env = environ.Env()
+base = environ.Path(__file__) - 1
+environ.Env.read_env(base('.env'))
 
 def main():
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'shoppingsite.settings')
+    # os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'shoppingsite.settings.local')
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', env('DJANGO_SETTINGS_MODULE'))
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
